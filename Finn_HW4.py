@@ -75,5 +75,12 @@ def delete_movie(movie_id):
     else:
         return redirect("/")
 
+@app.route('/movie/<int:movie_id>', methods=['GET','POST'])
+def get_movie(movie_id)
+    movie = movie_name.query.get_or_404(movie_id)
+    return render_template('movie.html', form=movie, pageTitle='Movie Details')
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
