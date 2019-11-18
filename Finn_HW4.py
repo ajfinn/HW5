@@ -43,6 +43,18 @@ def index():
     return render_template('index.html', movies=all_movies, pageTitle='Movie Names')
 
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method =='POST':
+        form = request.form
+        search_value = form['search_string']
+        search = "%{0}%".format(search_value)
+        results = movie_name.query.filter(movie_name.movie_name.like(search)).all()
+        return render_template('index.html', movies=results, pageTitle='Movies', legend ='Search Results')
+    else:
+            return redirect('/')
+
+
 @app.route('/movie/new', methods=['GET', 'POST'])
 def add_movie():
     form = MovieForm()
