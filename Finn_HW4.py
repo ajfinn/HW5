@@ -78,7 +78,20 @@ def delete_movie(movie_id):
 @app.route('/movie/<int:movie_id>', methods=['GET','POST'])
 def get_movie(movie_id)
     movie = movie_name.query.get_or_404(movie_id)
-    return render_template('movie.html', form=movie, pageTitle='Movie Details')
+    return render_template('movie.html', form=movie, pageTitle='Movie Details', legend = "Movie Details")
+
+@app.route('/friend/<int:movie_id>/update', methods =['GET', 'POST'])
+def update_movie(movie_id)
+    movie = movie_name.query.get_or_404(movie_id)
+    form = MovieForm()
+
+    If form.validate_on_submit():
+        movie.movie_name = form.movie_name.data
+        db.session.commit()
+        return redirect(url_for('get_movie', movie_id=movie.movie_id))
+    form.movie_id.data = movie.movie_id
+    form.movie_name.data = movie.movie_name
+    return render_template('update_movie.html', form=form, pageTitle='Update Movie', legend="Update a Movie")
 
 
 
